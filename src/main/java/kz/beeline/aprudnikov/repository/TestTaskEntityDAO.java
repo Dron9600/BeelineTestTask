@@ -1,11 +1,8 @@
 package kz.beeline.aprudnikov.repository;
 
-import kz.beeline.aprudnikov.entities.TestTaskEntity;
+import kz.beeline.aprudnikov.domain.TestTaskEntity;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +15,6 @@ public class TestTaskEntityDAO {
     }
 
     public void createTable() {
-        // SQL statement for creating a new table
         String sql = """
                 CREATE TABLE IF NOT EXISTS test_task_entities (
                  id integer PRIMARY KEY,
@@ -32,18 +28,49 @@ public class TestTaskEntityDAO {
         }
     }
 
-    public void putEntity(TestTaskEntity entity) {
-        // TODO make method working
+    public void insert(TestTaskEntity testTaskEntity) {
+        String sql = "INSERT INTO test_task_entities(id, data) VALUES(?,?)";
+        try{
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1, testTaskEntity.getId());
+            pstmt.setString(2, testTaskEntity.getData());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    public TestTaskEntity getEntity(int id) {
-        // TODO make method working
-        return new TestTaskEntity(0, "example");
+    public void insert(String[] fromFile) {
+        String sql = "INSERT INTO test_task_entities(id, data) VALUES(?,?)";
+        String id = fromFile[0];
+        String name = fromFile[1];
+        try{
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1, Integer.parseInt(id));
+            pstmt.setString(2, name);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    public List<TestTaskEntity> getAllEntities() {
-        // TODO make method working
-        return new ArrayList<TestTaskEntity>();
+    public List<TestTaskEntity> select() {
+        String sql ="SELECT * FROM test_task_entities";
+        List<TestTaskEntity> resultList = new ArrayList<>();
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String data = rs.getString("data");
+                resultList.add(new TestTaskEntity(id, data));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return resultList;
     }
+
+
 
 }

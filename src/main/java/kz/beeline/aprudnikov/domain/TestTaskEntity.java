@@ -1,11 +1,11 @@
-package kz.beeline.aprudnikov.entities;
+package kz.beeline.aprudnikov.domain;
 
 import java.util.Objects;
 
 public class TestTaskEntity {
 
-    private final int id;
-    private final String data;
+    private int id;
+    private String data;
 
     public TestTaskEntity(int id, String data) {
         this.id = id;
@@ -21,6 +21,22 @@ public class TestTaskEntity {
         boolean currencyCodeEquals = (this.data == null && other.data == null)
                 || (this.data != null && this.data.equals(other.data));
         return Objects.equals(this.id, other.id) && currencyCodeEquals;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 
 }

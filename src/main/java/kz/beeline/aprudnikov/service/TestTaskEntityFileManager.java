@@ -95,18 +95,19 @@ public class TestTaskEntityFileManager {
         return testTaskEntities;
     }
 
-    public static void deleteFolder(File targetDirectory) {
-        File[] files = targetDirectory.listFiles();
-        if (files != null) { //some JVMs return null for empty dirs
-            for(File f: files) {
-                if(f.isDirectory()) {
-                    deleteFolder(f);
-                } else {
-                    f.delete();
-                }
+    public void deleteFolder(String directory) {
+        File file = new File(directory);
+        File[] files = file.listFiles();
+        assert files != null;
+        for (File f:files) {
+            if (f.isFile() && f.exists()) {
+                boolean deleteResult = f.delete();
+                System.out.println(f.getName() + " deleted: " + deleteResult);
+            } else {
+                System.out.println("can not delete a file due to open or error");
             }
         }
-        targetDirectory.delete();
     }
+
 
 }

@@ -28,6 +28,20 @@ public class TestTaskEntityDAO {
         }
     }
 
+    public void insert(List<TestTaskEntity> testTaskEntities) throws SQLException {
+        String sql = "INSERT INTO test_task_entities(id, data) VALUES(?,?)";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        testTaskEntities.forEach(itm -> {
+            try {
+                pstmt.setInt(1, itm.getId());
+                pstmt.setString(2, itm.getData());
+                pstmt.executeUpdate();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        });
+    }
+
     public void insert(TestTaskEntity testTaskEntity) {
         String sql = "INSERT INTO test_task_entities(id, data) VALUES(?,?)";
         try{

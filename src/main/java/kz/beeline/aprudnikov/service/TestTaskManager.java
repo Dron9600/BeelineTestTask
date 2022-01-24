@@ -5,13 +5,15 @@ import kz.beeline.aprudnikov.domain.TestTaskEntity;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class TestTaskManager implements Runnable {
 
     private final List<String> fileNames = new ArrayList<>();
     private final List<TestTaskEntity> testTaskEntities = new ArrayList<>();
     private final TestTaskEntityFileManager testTaskEntityFileManager;
-    private boolean isFinished = false;
+    private int finishedThreads = 0;
 
     public TestTaskManager(String directory, TestTaskEntityFileManager testTaskEntityFileManager) {
         File directoryFiles = new File(directory);
@@ -26,7 +28,7 @@ public class TestTaskManager implements Runnable {
     public void reset(String directory) {
         fileNames.clear();
         testTaskEntities.clear();
-        isFinished = false;
+        finishedThreads = 0;
         File directoryFiles = new File(directory);
         File[] files = directoryFiles.listFiles();
         assert files != null;
@@ -54,14 +56,20 @@ public class TestTaskManager implements Runnable {
         return testTaskEntities;
     }
 
+    @Override
     public void run() {
         String currentFile = takeFile();
         if (currentFile != null) {
             List<TestTaskEntity> listResult = testTaskEntityFileManager.readToEntitiesList(currentFile);
             putResult(listResult);
+            System.out.println("Now thread " + Thread.currentThread().getName() + " read file: " + currentFile);
         } else {
-            isFinished = true;
+            finishedThreads++;
         }
+    }
+
+    public int isFinished() {
+        return finishedThreads;
     }
 
 }

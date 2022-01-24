@@ -1,6 +1,7 @@
 package kz.beeline.aprudnikov.repository;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -13,17 +14,29 @@ public class DBConnection {
         this.url = "jdbc:sqlite:" + dbLocate + "\\" + dbName;
     }
 
-    public Connection connect() {
+    public void connect() {
         try {
             this.connection = DriverManager.getConnection(url);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return this.connection;
     }
 
     public Connection getConnection() {
         return this.connection;
+    }
+
+    public void createNewDatabase(String dbLocate, String dbName) {
+        String url = "jdbc:sqlite:" + dbLocate  + dbName;
+        try (Connection conn = DriverManager.getConnection(url)) {
+            if (conn != null) {
+                DatabaseMetaData meta = conn.getMetaData();
+                System.out.println("The driver name is " + meta.getDriverName());
+                System.out.println("A new database has been created.");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }

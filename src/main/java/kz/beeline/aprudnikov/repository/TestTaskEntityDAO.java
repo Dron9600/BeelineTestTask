@@ -78,7 +78,7 @@ public class TestTaskEntityDAO {
         }
     }
 
-    public List<TestTaskEntity> select() {
+    public List<TestTaskEntity> selectAll() {
         String sql ="SELECT * FROM test_task_entities";
         List<TestTaskEntity> resultList = new ArrayList<>();
         try {

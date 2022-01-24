@@ -20,6 +20,14 @@ public class TestTaskEntityFileManager {
 
     String[] dataCollection = new String[]{"Andy", "Jonny", "Biber", "Fred", "Tod", "Bob"};
 
+    public void fill(List<TestTaskEntity> entities, String fileName) throws IOException {
+        PrintWriter fw = new PrintWriter(new FileWriter(directory + fileName));
+        entities.forEach(itm -> {
+            fw.write(itm.getId() + separator + itm.getData()  + "\n");
+        });
+        fw.close();
+    }
+
     public void fillRandom(String fileName) throws IOException {
         PrintWriter fw = new PrintWriter(new FileWriter(directory + fileName));
         for (int i = 1; i < linesNumber + 1; i++) {

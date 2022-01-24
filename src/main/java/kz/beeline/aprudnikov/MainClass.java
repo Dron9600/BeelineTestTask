@@ -14,21 +14,23 @@ public class MainClass {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
+        // config
         int numberOfWorkingThreads = 5;
         int numberOfFiles = 10;
         int numberOfLinesInEachFile = 10;
 
-        // files read directory
+        // files folder and database directories
         String filesDirectory = "C:\\Users\\Lenovo\\Desktop\\Java\\BeelineTestQuestionFiles\\";
-        String DBdirectory = "C:\\Users\\Lenovo\\Desktop\\Java\\BeelineTestQuestionDB\\";
+        String dbDirectory = "C:\\Users\\Lenovo\\Desktop\\Java\\BeelineTestQuestionDB\\";
+        String dbName = "testTaskEntities.db";
 
         // delete all files in folder before program started
         TestTaskEntityFileManager fileManager = new TestTaskEntityFileManager(filesDirectory, numberOfLinesInEachFile, ";");
         fileManager.deleteFolder(filesDirectory);
 
         // db connector
-        DBConnection sqlLiteConnection = new DBConnection(DBdirectory, "testTaskEntities.db");
-        sqlLiteConnection.createNewDatabase(DBdirectory, "testTaskEntities.db");
+        DBConnection sqlLiteConnection = new DBConnection(dbDirectory, dbName);
+        sqlLiteConnection.createNewDatabase(dbDirectory, dbName);
         sqlLiteConnection.connect();
 
         // test entity data access object
@@ -41,7 +43,7 @@ public class MainClass {
         entityDAO.createTable();
 
         // file manager object init, directory - file directory, lines number - file lines number contains, separator - sign of separation (id;data)
-        fileManager.create(numberOfFiles);
+        fileManager.createRandomFilledFiles(numberOfFiles);
 
         // thread pool manager
         TestTaskManager taskManager = new TestTaskManager(filesDirectory, fileManager);

@@ -26,7 +26,7 @@ public class TestTaskEntityFileManagerTest {
         boolean mkdirs = file.mkdirs();
         // clearing directory from previous executions data
         fileManager.deleteFolder(filesDirectory);
-        fileManager.create(numberOfFiles);
+        fileManager.createRandomFilledFiles(numberOfFiles);
         System.out.println("Test initialization completed");
     }
 

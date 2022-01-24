@@ -34,6 +34,9 @@ public class MainClass {
         // test entity data access object
         TestTaskEntityDAO entityDAO = new TestTaskEntityDAO(sqlLiteConnection.getConnection());
 
+        // clear table from previous executions data
+        entityDAO.deleteTable();
+
         // create empty table with test task entity structure
         entityDAO.createTable();
 

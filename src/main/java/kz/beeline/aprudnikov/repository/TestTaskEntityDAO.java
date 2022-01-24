@@ -28,6 +28,16 @@ public class TestTaskEntityDAO {
         }
     }
 
+    public void deleteTable() {
+        String sql = "DELETE FROM test_task_entities";
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void insert(List<TestTaskEntity> testTaskEntities) throws SQLException {
         String sql = "INSERT INTO test_task_entities(id, data) VALUES(?,?)";
         PreparedStatement pstmt = connection.prepareStatement(sql);

@@ -20,8 +20,7 @@ public class TestTaskEntityFileManager {
 
     String[] dataCollection = new String[]{"Andy", "Jonny", "Biber", "Fred", "Tod", "Bob"};
 
-    public void fillRandom(int fileNumber) throws IOException {
-        String fileName = "File#" + fileNumber + ".txt";
+    public void fillRandom(String fileName) throws IOException {
         PrintWriter fw = new PrintWriter(new FileWriter(directory + fileName));
         for (int i = 1; i < linesNumber + 1; i++) {
             fw.write((int)(i * Math.random() * 100000) + separator + "Owner name of this id is " + dataCollection[(int)(Math.random() * 6)]  + "\n");
@@ -31,9 +30,9 @@ public class TestTaskEntityFileManager {
 
     public void createRandomFilledFiles(int filesNumber) throws IOException {
         for (int i = 0; i < filesNumber; i++) {
-            String fileName = "File#" + filesNumber + ".txt";
+            String fileName = "File#" + i + ".txt";
             new File(directory + fileName);
-            fillRandom(i + 1);
+            fillRandom(fileName);
         }
     }
 

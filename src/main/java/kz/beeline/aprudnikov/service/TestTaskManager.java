@@ -5,8 +5,6 @@ import kz.beeline.aprudnikov.domain.TestTaskEntity;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class TestTaskManager implements Runnable {
 

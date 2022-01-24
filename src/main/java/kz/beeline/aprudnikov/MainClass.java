@@ -26,7 +26,7 @@ public class MainClass {
         TestTaskEntityFileManager fileManager = new TestTaskEntityFileManager(filesDirectory, numberOfLinesInEachFile, ";");
         fileManager.deleteFolder(filesDirectory);
 
-        // db connector todo interface for psql or mysql using possibility
+        // db connector
         DBConnection sqlLiteConnection = new DBConnection(DBdirectory, "testTaskEntities.db");
         sqlLiteConnection.createNewDatabase(DBdirectory, "testTaskEntities.db");
         sqlLiteConnection.connect();
